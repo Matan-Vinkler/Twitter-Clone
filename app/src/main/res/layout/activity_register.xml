@@ -31,12 +31,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create your account"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
-        android:textSize="30sp"
+        android:text="Create your account"
         android:textColor="@color/black"
-        android:textStyle="bold"/>
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="250dp"

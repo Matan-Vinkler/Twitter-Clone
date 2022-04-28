@@ -1,11 +1,13 @@
 package com.matan.twitterclone;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,10 +22,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 public class NewTweetActivity extends AppCompatActivity {
+
+    private EditText edtContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +42,7 @@ public class NewTweetActivity extends AppCompatActivity {
         String displayName = PreferenceManager.getDefaultSharedPreferences(this).getString("DisplayName", "");
         String username = PreferenceManager.getDefaultSharedPreferences(this).getString("Username", "");
 
-        EditText edtContent = findViewById(R.id.edt_content);
+        edtContent = findViewById(R.id.edt_content);
 
         ImageButton btnBack = findViewById(R.id.btn_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +51,17 @@ public class NewTweetActivity extends AppCompatActivity {
                 Intent intent = new Intent(NewTweetActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        ImageButton btnMic = findViewById(R.id.btn_mic);
+        btnMic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                speechIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speech to Text");
+                startActivityForResult(speechIntent, 1);
             }
         });
 
@@ -87,5 +103,16 @@ public class NewTweetActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode == 1 && resultCode == RESULT_OK) {
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            edtContent.setText(matches.get(0).toString());
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

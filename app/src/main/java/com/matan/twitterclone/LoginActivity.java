@@ -106,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                                     PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit().putString("DisplayName", snapshot.child("Name").getValue().toString()).apply();
                                     PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit().putString("Username", snapshot.child("Username").getValue().toString()).apply();
                                     startActivity(intent);
+                                    finish();
                                 }
 
                                 @Override

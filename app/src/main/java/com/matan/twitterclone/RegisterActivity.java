@@ -79,6 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                 intent.putExtra("Email", email);
                 intent.putExtra("BirthDate", dateString);
                 startActivity(intent);
+                finish();
             }
         });
     }

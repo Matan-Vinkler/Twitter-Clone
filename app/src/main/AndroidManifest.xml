@@ -8,7 +8,19 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TwitterClone">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".AudioSettingsActivity"
+            android:exported="false" />
+
+        <service
+            android:name=".MusicService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false" />
         <activity
             android:name=".NewTweetActivity"
             android:exported="false" />

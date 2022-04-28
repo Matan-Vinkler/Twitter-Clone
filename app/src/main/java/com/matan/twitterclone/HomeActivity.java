@@ -47,6 +47,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://twitter-clone-614bd-default-rtdb.europe-west1.firebasedatabase.app");
         DatabaseReference tweetRef = database.getReference("Tweets");
 
+        Intent musicService = new Intent(this, MusicService.class);
+        startService(musicService);
+
         String displayName = PreferenceManager.getDefaultSharedPreferences(this).getString("DisplayName", "");
         String username = PreferenceManager.getDefaultSharedPreferences(this).getString("Username", "");
 
@@ -111,6 +114,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, NewTweetActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -120,7 +124,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         int id = item.getItemId();
 
-        if(id == R.id.item_10) {
+        if(id == R.id.item_1) {
+            Intent intent = new Intent(HomeActivity.this, AboutActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else if(id == R.id.item_2) {
+            Intent intent = new Intent(HomeActivity.this, AudioSettingsActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else if(id == R.id.item_3) {
             FirebaseAuth.getInstance().signOut();
 
             PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("is_user_logged", false).commit();
